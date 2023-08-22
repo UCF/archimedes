@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { EventResultsComponent } from './components/event-results/event-results.component';
+import { Component, OnInit } from '@angular/core';
+import { ConfigService } from './services/config.service';
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +11,9 @@ import { EventResultsComponent } from './components/event-results/event-results.
 export class AppComponent {
   title = 'archimedes';
   currentQuery!: string;
+
+  constructor(
+  ) {}
 
   queryChange(event: any) {
     this.currentQuery = event.target.value;

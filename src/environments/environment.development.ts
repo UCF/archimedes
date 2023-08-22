@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    searchServiceUrl: 'https://searchdev.cm.ucf.edu'
+    searchServiceUrl: 'http://localhost:8000'
 };
