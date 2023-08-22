@@ -1,0 +1,6 @@
+<ng-container *ngIf="events && events.length > 0">
+    <h2>Events</h2>
+    <a href="{{ result.url }}" target="_blank" class="list-group-item" *ngFor="let result of events | slice:0:5; let i = index;">
+        <app-event-item [eventDetailURL]="result.details"></app-event-item>
+    </a>
+</ng-container>

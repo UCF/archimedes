@@ -1,0 +1,4 @@
+<ng-container *ngIf="programItems && programItems.length > 0">
+    <h2>Programs</h2>
+    <app-program-item [program]="program" class="list-group-item" *ngFor="let program of programItems"></app-program-item>
+</ng-container>
