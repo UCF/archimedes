@@ -4,23 +4,17 @@
     (change)="queryChange($event)">
   </app-search-box>
   <div class="row">
-    <div class="col-6">
-      <app-event-results
-        [query]="currentQuery"></app-event-results>
-    </div>
-    <div class="col-6">
+    <div class="col-12 col-md-8">
+      <app-image-results
+        [query]="currentQuery"></app-image-results>
       <app-news-results
         [query]="currentQuery"></app-news-results>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-6">
+    <div class="col-12 col-md-4">
       <app-program-results
         [query]="currentQuery"></app-program-results>
-    </div>
-    <div class="col-6">
-      <app-image-results
-        [query]="currentQuery"></app-image-results>
+      <app-event-results
+        [query]="currentQuery"></app-event-results>
     </div>
   </div>
 </div>
