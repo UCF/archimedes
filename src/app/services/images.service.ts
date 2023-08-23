@@ -9,7 +9,6 @@ import { ConfigService } from './config.service';
 export class ImagesService {
 
   client: HttpClient;
-  config: ConfigService;
   mediaGraphApiUrl!: string;
   mediaGraphApiKey!: string;
   mediaGraphOrgId!: string;
@@ -19,10 +18,11 @@ export class ImagesService {
     config: ConfigService
   ) {
     this.client = client;
-    this.config = config;
-    this.mediaGraphApiUrl = this.config.mediaGraphApiUrl;
-    this.mediaGraphApiKey = this.config.mediaGraphApiKey;
-    this.mediaGraphOrgId = this.config.mediaGraphOrgId;
+    config.appConfig.subscribe((config) => {
+      this.mediaGraphApiUrl = config.ucf_mediagraph_api_url;
+      this.mediaGraphApiKey = config.ucf_mediagraph_api_key;
+      this.mediaGraphOrgId = config.ucf_mediagraph_org_id;
+    });
   }
 
   getImages(query: string, offset: number = 0): Observable<any> {

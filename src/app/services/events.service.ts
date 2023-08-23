@@ -10,7 +10,6 @@ import { ConfigService } from './config.service';
 export class EventsService {
 
   client: HttpClient;
-  config: ConfigService;
   eventsApiUrl!: string;
 
   constructor(
@@ -18,8 +17,9 @@ export class EventsService {
     config: ConfigService
   ) {
     this.client = client;
-    this.config = config;
-    this.eventsApiUrl = this.config.eventsApiUrl;
+    config.appConfig.subscribe((config) => {
+      this.eventsApiUrl = config.ucf_events_api;
+    });
   }
 
   getEvents(query: string, offset: number = 0): Observable<EventAPIResponse> {

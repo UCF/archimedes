@@ -17,7 +17,8 @@ import { ProgramItemComponent } from './components/program-item/program-item.com
 import { ImageResultsComponent } from './components/image-results/image-results.component';
 import { ImageItemComponent } from './components/image-item/image-item.component';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { AuthService } from './services/auth.service';
+import { LoadingIconComponent } from './components/loading-icon/loading-icon.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { Router } from '@angular/router';
     ProgramResultsComponent,
     ProgramItemComponent,
     ImageResultsComponent,
-    ImageItemComponent
+    ImageItemComponent,
+    LoadingIconComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +43,7 @@ import { Router } from '@angular/router';
     {
       provide: APP_INITIALIZER,
       multi: true,
-      deps: [ConfigService, Router],
+      deps: [AuthService],
       useFactory: initializeApp,
     }
   ],
@@ -49,6 +51,6 @@ import { Router } from '@angular/router';
 })
 export class AppModule { }
 
-function initializeApp(configService: ConfigService, router: Router): () => Observable<any> {
-  return () => configService.loadAppConfig(router);
+function initializeApp(auth: AuthService): () => Observable<any> {
+  return () => auth.getLoggedInUser();
 }

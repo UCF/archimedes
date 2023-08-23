@@ -1,6 +1,12 @@
-<ng-container *ngIf="events && events.length > 0">
+<ng-container *ngIf="query">
     <h2>Events</h2>
-    <a href="{{ result.url }}" target="_blank" class="list-group-item" *ngFor="let result of events | slice:0:5; let i = index;">
-        <app-event-item [eventDetailURL]="result.details"></app-event-item>
-    </a>
+    <app-loading-icon *ngIf="loading"></app-loading-icon>
+    <div *ngIf="hasResults">
+        <a href="{{ result.url }}" target="_blank" class="list-group-item" *ngFor="let result of events | slice:0:5; let i = index;">
+            <app-event-item [eventDetailURL]="result.details"></app-event-item>
+        </a>
+    </div>
+    <div class="alert alert-info" *ngIf="!hasResults && !loading">
+        <p>No events found for &ldquo;{{ query }}&rdquo;.</p>
+    </div>
 </ng-container>

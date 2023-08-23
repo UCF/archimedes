@@ -7,26 +7,31 @@ import { NewsService } from 'src/app/services/news.service';
   templateUrl: './news-results.component.html',
   styleUrls: ['./news-results.component.scss']
 })
-export class NewsResultsComponent implements OnInit, OnChanges {
+export class NewsResultsComponent implements OnChanges {
   @Input() query!: string;
 
   newsItems?: NewsItem[];
+  loading: boolean = false;
 
   constructor(
     private newsService: NewsService
   ) {}
 
-  ngOnInit(): void {
-    this.getNews();
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes['query'].firstChange) return;
+
     this.getNews();
   }
 
   getNews(): void {
+    this.loading = true;
     this.newsService.getNews(this.query).subscribe((results) => {
+      this.loading = false;
       this.newsItems = results;
     });
+  }
+
+  get hasResults(): boolean {
+    return this.newsItems !== undefined && this.newsItems.length > 0;
   }
 }

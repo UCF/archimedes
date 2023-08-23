@@ -6,26 +6,31 @@ import { ImagesService } from 'src/app/services/images.service';
   templateUrl: './image-results.component.html',
   styleUrls: ['./image-results.component.scss']
 })
-export class ImageResultsComponent implements OnInit, OnChanges {
+export class ImageResultsComponent implements OnChanges {
   @Input() query!: string;
 
   imageItems?: any[]
+  loading: boolean = false;
 
   constructor(
     private imageService: ImagesService
   ) {}
 
-  ngOnInit(): void {
-      this.getImages();
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
-      this.getImages();
+    if (changes['query'].firstChange) return;
+
+    this.getImages();
   }
 
   getImages(): void {
+    this.loading = true;
     this.imageService.getImages(this.query).subscribe((results) => {
+      this.loading = false;
       this.imageItems = results.assets;
     });
+  }
+
+  get hasResults(): boolean {
+    return this.imageItems !== undefined && this.imageItems.length > 0;
   }
 }

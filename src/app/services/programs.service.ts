@@ -10,7 +10,6 @@ import { ConfigService } from './config.service';
 export class ProgramsService {
 
   client: HttpClient;
-  config: ConfigService;
   programApiUrl!: string;
 
   constructor(
@@ -18,8 +17,9 @@ export class ProgramsService {
     config: ConfigService
   ) {
     this.client = client;
-    this.config = config;
-    this.programApiUrl = this.config.programApiUrl;
+    config.appConfig.subscribe((config) => {
+      this.programApiUrl = config.ucf_search_service_api;
+    });
   }
 
   getPrograms(query: string, offset: number = 0): Observable<ProgramAPIResults> {

@@ -1,4 +1,10 @@
-<ng-container *ngIf="programItems && programItems.length > 0">
+<ng-container *ngIf="query">
     <h2>Programs</h2>
-    <app-program-item [program]="program" class="list-group-item" *ngFor="let program of programItems"></app-program-item>
+    <app-loading-icon *ngIf="loading"></app-loading-icon>
+    <div *ngIf="hasResults">
+        <app-program-item [program]="program" class="list-group-item" *ngFor="let program of programItems"></app-program-item>
+    </div>
+    <div class="alert alert-info" *ngIf="!hasResults && !loading">
+        <p>No programs found for &ldquo;{{ query }}&rdquo;.</p>
+    </div>
 </ng-container>

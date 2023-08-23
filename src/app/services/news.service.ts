@@ -17,7 +17,9 @@ export class NewsService {
     config: ConfigService
   ) {
     this.client = client;
-    this.newsApiUrl = config.newsApiUrl;
+    config.appConfig.subscribe((config) => {
+      this.newsApiUrl = config.ucf_news_api;
+    });
   }
 
   getNews(query: string, offset: number = 0): Observable<NewsItem[]> {

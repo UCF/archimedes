@@ -9,26 +9,31 @@ import { EventsService } from 'src/app/services/events.service';
   templateUrl: './event-results.component.html',
   styleUrls: ['./event-results.component.scss']
 })
-export class EventResultsComponent implements OnInit, OnChanges {
+export class EventResultsComponent implements OnChanges {
   @Input() query!: string;
 
   events?: EventResult[]
+  loading: boolean = false;;
 
   constructor(
     private eventsService: EventsService
   ) {}
 
-  ngOnInit(): void {
-    this.getEvents();
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes['query'].firstChange) return;
     this.getEvents();
   }
 
   getEvents(): void {
+    this.loading = true;
+
     this.eventsService.getEvents(this.query).subscribe((results) => {
+      this.loading = false;
       this.events = results.results;
     });
+  }
+
+  get hasResults(): boolean {
+    return this.events !== undefined && this.events.length > 0;
   }
 }
